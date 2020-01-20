@@ -27,7 +27,7 @@ const PostModel = Mongoose.model("post", {
 
 server.route({
     method: "GET",
-    path: "/posts",
+    path: "/*",
     handler: async (request, h) => {
         try {
             return "teste ok";
