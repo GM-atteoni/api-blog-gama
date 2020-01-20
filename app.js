@@ -23,6 +23,30 @@ const PostModel = Mongoose.model("post", {
 })
 
 server.route({
+    method: "POST",
+    path: "/post",
+    options: {
+        validate: {
+            payload: {
+                assunto: Joi.string().required(),
+                corpo: Joi.string().required(),
+                criadoEm: Joi.optional()
+            }
+        }
+    },
+    handler: async (request, h) => {
+        try {
+            request.payload.criadoEm = new Date();
+            let post = new PostModel(request.payload);
+            let result = await post.save();
+            return h.response(result);
+        } catch (error) {
+            return h.response(error).code(500);
+        }
+    }
+})
+
+server.route({
     method: "GET",
     path: "/posts",
     handler: async (request, h) => {
@@ -37,7 +61,7 @@ server.route({
 
 server.route({
     method: "GET",
-    path: "/posts/{id}",
+    path: "/post/{id}",
     handler: async (request, h) => {
         try {
             let post = await await PostModel.findById(request.params.id).exec();
