@@ -12,6 +12,7 @@ Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/aveng
     useUnifiedTopology: true
 });
 
+
 const db = Mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -22,6 +23,18 @@ const PostModel = Mongoose.model("post", {
     assunto: String,
     corpo: String,
     criadoEm: Date
+})
+
+server.route({
+    method: "GET",
+    path: "/",
+    handler: async (request, h) => {
+        try {
+            return "not found"
+        } catch (error) {
+            return h.response(error).code(500);
+        }
+    }
 })
 
 server.route({
