@@ -4,7 +4,7 @@ const Mongoose = require('mongoose');
 
 const porta = process.env.PORT || 8080;
 
-const server = new Hapi.Server({ "host": "https://api-blog-gama.herokuapp.com", "port": porta });
+const server = new Hapi.Server({ "port": porta });
 
 Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/avengers?retryWrites=true&w=majority",  
 { 
