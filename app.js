@@ -18,6 +18,13 @@ const PostModel = Mongoose.model("post", {
     criadoEm: Date
 })
 
+const GetPostModel = Mongoose.model("post", {
+    _id: String,
+    assunto: String,
+    corpo: String,
+    criadoEm: Date
+})
+
 server.route({
     method: "POST",
     path: "/post",
@@ -47,7 +54,7 @@ server.route({
     path: "/posts",
     handler: async (request, h) => {
         try {
-            let posts = await PostModel.find().exec();
+            let posts = await GetPostModel.find().exec();
             return h.response(posts);
         } catch (error) {
             return h.response(error).code(500);
@@ -60,7 +67,7 @@ server.route({
     path: "/post/{id}",
     handler: async (request, h) => {
         try {
-            let post = await await PostModel.findById(request.params.id).exec();
+            let post = await await GetPostModel.findById(request.params.id).exec();
             return h.response(post);
         } catch (error) {
             return h.response(error).code(500);
