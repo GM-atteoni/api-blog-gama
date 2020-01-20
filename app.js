@@ -13,6 +13,7 @@ Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/aveng
 });
 
 const PostModel = Mongoose.model("post", { 
+    _id: String,
     assunto: String,
     corpo: String,
     criadoEm: Date
