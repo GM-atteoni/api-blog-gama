@@ -27,8 +27,21 @@ server.route({
     path: "/posts",
     handler: async (request, h) => {
         try {
-            let posts = await new PostModel.find().exec();
+            let posts = await PostModel.find().exec();
             return h.response(posts);
+        } catch (error) {
+            return h.response(error).code(500);
+        }
+    }
+})
+
+server.route({
+    method: "GET",
+    path: "/posts/{id}",
+    handler: async (request, h) => {
+        try {
+            let post = await await PostModel.findById(request.params.id).exec();
+            return h.response(post);
         } catch (error) {
             return h.response(error).code(500);
         }
