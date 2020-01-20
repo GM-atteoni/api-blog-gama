@@ -78,7 +78,7 @@ server.route({
 //default
 server.route({
     method: "GET",
-    path: "*",
+    path: "/*",
     handler: async (request, h) => {
         try {
             return "not found"
