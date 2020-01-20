@@ -24,7 +24,8 @@
     "mongoose": "^5.8.9"
   },
   "engines": {
-    "node": "12.x"
+    "node": "12.x",
+    "npm": "6.10.x"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
