@@ -26,6 +26,18 @@ const PostModel = Mongoose.model("post", {
 })
 
 server.route({
+    method: "GET",
+    path: "/posts",
+    handler: async (request, h) => {
+        try {
+            return "teste ok";
+        } catch (error) {
+            return h.response(error).code(500);
+        }
+    }
+})
+
+server.route({
     method: "POST",
     path: "/post",
     options: {
@@ -69,19 +81,6 @@ server.route({
         try {
             let post = await await PostModel.findById(request.params.id).exec();
             return h.response(post);
-        } catch (error) {
-            return h.response(error).code(500);
-        }
-    }
-})
-
-//default
-server.route({
-    method: "GET",
-    path: "/*",
-    handler: async (request, h) => {
-        try {
-            return "not found"
         } catch (error) {
             return h.response(error).code(500);
         }
