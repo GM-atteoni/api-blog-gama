@@ -2,7 +2,9 @@ const Hapi = require('hapi');
 const Joi = require('joi');
 const Mongoose = require('mongoose');
 
-const server = new Hapi.Server({ "host": "localhost", "port": 3000 });
+const porta = process.env.PORT || 8080;
+
+const server = new Hapi.Server({ "host": "https://api-blog-gama.herokuapp.com", "port": porta });
 
 Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/avengers?retryWrites=true&w=majority",  
 { 
