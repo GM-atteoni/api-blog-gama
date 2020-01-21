@@ -31,7 +31,7 @@ server.route({
                 subTitulo: Joi.string().required(),
                 corpo: Joi.string().required(),
                 author: Joi.string().required(),
-                keyWord: Joi.array().items(Joi.string()).optional(),
+                keyWord: Joi.string().required(),
                 criadoEm: Joi.optional()    
             },
             failAction: (request, h, error) => {
