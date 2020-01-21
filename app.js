@@ -4,7 +4,7 @@ const Mongoose = require('mongoose');
 
 const porta = process.env.PORT || 8080;
 
-const server = new Hapi.Server({ "port": porta });
+const server = new Hapi.Server({ "port": porta, routes: { cors: true } });
 
 Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/avengers?retryWrites=true&w=majority",  
 { 
@@ -48,12 +48,6 @@ server.route({
         } catch (error) {
             return h.response(error).code(500);
         }
-    },
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
-        }
     }
 })
 
@@ -66,12 +60,6 @@ server.route({
             return h.response(posts);
         } catch (error) {
             return h.response(error).code(500);
-        }
-    },
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
         }
     }
 })
@@ -86,12 +74,6 @@ server.route({
             return h.response(post);
         } catch (error) {
             return h.response(error).code(500);
-        }
-    },
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
         }
     }
 })
