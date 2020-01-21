@@ -37,6 +37,9 @@ server.route({
                 author: Joi.string().required(),
                 keyWords: Joi.array().items(Joi.string()).required(),
                 criadoEm: Joi.optional()    
+            },
+            failAction: (request, h, error) => {
+                return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
             }
         }
     },
