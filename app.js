@@ -2,7 +2,9 @@ const Hapi = require('hapi');
 const Joi = require('joi');
 const Mongoose = require('mongoose');
 
-const server = new Hapi.Server({ "host": "localhost", "port": 3000 });
+const porta = process.env.PORT || 8080;
+
+const server = new Hapi.Server({ "port": porta });
 
 Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/avengers?retryWrites=true&w=majority",  
 { 
@@ -11,8 +13,11 @@ Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/aveng
 });
 
 const PostModel = Mongoose.model("post", { 
-    assunto: String,
+    titulo: String,
+    subTitulo: String,
     corpo: String,
+    keyWord: String,
+    author: String,
     criadoEm: Date
 })
 
@@ -22,9 +27,15 @@ server.route({
     options: {
         validate: {
             payload: {
-                assunto: Joi.string().required(),
+                titulo: Joi.string().required(),
+                subTitulo: Joi.string().required(),
                 corpo: Joi.string().required(),
-                criadoEm: Joi.optional()
+                author: Joi.string().required(),
+                keyWord: Joi.string().required(),
+                criadoEm: Joi.optional()    
+            },
+            failAction: (request, h, error) => {
+                return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
             }
         }
     },
@@ -53,12 +64,13 @@ server.route({
     }
 })
 
+
 server.route({
     method: "GET",
     path: "/post/{id}",
     handler: async (request, h) => {
         try {
-            let post = await await PostModel.findById(request.params.id).exec();
+            let post = await PostModel.findById(request.params.id).exec();
             return h.response(post);
         } catch (error) {
             return h.response(error).code(500);
