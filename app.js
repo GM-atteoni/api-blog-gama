@@ -78,4 +78,17 @@ server.route({
     }
 })
 
+server.route({
+    method: "DELETE",
+    path: "/post/{id}",
+    handler: async (request, h) => {
+        try {
+            let post = await PostModel.findByIdAndDelete(request.params.id).exec();
+            return h.response(post);
+        } catch (error) {
+            return h.response(error).code(500);
+        }
+    }
+})
+
 server.start();
