@@ -16,11 +16,7 @@ const PostModel = Mongoose.model("post", {
     titulo: String,
     subTitulo: String,
     corpo: String,
-    keyWords: [
-        {
-            keyWord: String
-        }
-    ],
+    keyWord: String,
     author: String,
     criadoEm: Date
 })
@@ -35,7 +31,7 @@ server.route({
                 subTitulo: Joi.string().required(),
                 corpo: Joi.string().required(),
                 author: Joi.string().required(),
-                keyWords: Joi.array().items(Joi.string()).optional(),
+                keyWord: Joi.array().items(Joi.string()).optional(),
                 criadoEm: Joi.optional()    
             },
             failAction: (request, h, error) => {
