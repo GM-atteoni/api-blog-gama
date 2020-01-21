@@ -31,9 +31,12 @@ server.route({
     options: {
         validate: {
             payload: {
-                assunto: Joi.string().required(),
+                titulo: Joi.string().required(),
+                subTitulo: Joi.string().required(),
                 corpo: Joi.string().required(),
-                criadoEm: Joi.optional()
+                author: Joi.string().required(),
+                keyWords: Joi.array().items(Joi.string()).required(),
+                criadoEm: Joi.optional()    
             }
         }
     },
