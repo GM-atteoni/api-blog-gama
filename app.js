@@ -18,6 +18,7 @@ const PostModel = Mongoose.model("post", {
     subTitulo: String,
     corpo: String,
     keyWord: String,
+    imgSrc: String,
     author: String,
     criadoEm: Date
 })
@@ -31,6 +32,7 @@ server.route({
                 titulo: Joi.string().required(),
                 subTitulo: Joi.string().required(),
                 corpo: Joi.string().required(),
+                imgSrc: Joi.string().optional(),
                 author: Joi.string().required(),
                 keyWord: Joi.string().required(),
                 criadoEm: Joi.optional()    
@@ -43,6 +45,9 @@ server.route({
     handler: async (request, h) => {
         try {
             request.payload.criadoEm = new Date();
+            if(!request.payload.imgSrc){
+                request.payload.imgSrc = 'https://picsum.photos/796/416'
+            }
             let post = new PostModel(request.payload);
             let result = await post.save();
             return h.response(result);
@@ -75,6 +80,7 @@ server.route({
                 subTitulo: Joi.string().optional(),
                 corpo: Joi.string().optional(),
                 author: Joi.string().optional(),
+                imgSrc: Joi.string().optional(),
                 keyWord: Joi.string().optional(),
                 criadoEm: Joi.optional()    
             },
