@@ -1,12 +1,13 @@
 const Hapi = require('hapi');
 const Joi = require('joi');
 const Mongoose = require('mongoose');
+const { stringConnection } = require('./db-settings.json');
 
 const porta = process.env.PORT || 8080;
 
 const server = new Hapi.Server({ "port": porta, routes: { cors: true } });
 
-Mongoose.connect("mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/avengers?retryWrites=true&w=majority",  
+Mongoose.connect(stringConnection,  
 { 
     useNewUrlParser: true, 
     useUnifiedTopology: true
