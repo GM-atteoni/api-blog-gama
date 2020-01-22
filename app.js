@@ -56,6 +56,19 @@ server.route({
     path: "/posts",
     handler: async (request, h) => {
         try {
+            let posts = await PostModel.findByIdAndUpdate(request.params.id).exec();
+            return h.response(posts);
+        } catch (error) {
+            return h.response(error).code(500);
+        }
+    }
+})
+
+server.route({
+    method: "PUT",
+    path: "/post/{id}",
+    handler: async (request, h) => {
+        try {
             let posts = await PostModel.find().exec();
             return h.response(posts);
         } catch (error) {
