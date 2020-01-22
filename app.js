@@ -9,7 +9,8 @@ const server = new Hapi.Server({ "port": porta, routes: { cors: true } });
 Mongoose.connect('mongodb+srv://avenger:avenger@cluster0-gpsta.mongodb.net/avengers?retryWrites=true&w=majority',  
 { 
     useNewUrlParser: true, 
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false 
 });
 
 const PostModel = Mongoose.model("post", { 
