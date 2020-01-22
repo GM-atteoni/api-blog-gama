@@ -86,8 +86,7 @@ server.route({
     handler: async (request, h) => {
         try {
             request.payload.criadoEm = new Date();
-            let post = new PostModel(request.payload);
-            let posts = await PostModel.findOneAndUpdate(request.params.id, post, {new: true}).exec();
+            let posts = await PostModel.findByIdAndUpdate(request.params.id, request.payload, {new: true}).exec();
             return h.response(posts);
         } catch (error) {
             return h.response(error).code(500);
