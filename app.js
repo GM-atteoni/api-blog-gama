@@ -56,7 +56,7 @@ server.route({
     path: "/posts",
     handler: async (request, h) => {
         try {
-            let posts = await PostModel.findByIdAndUpdate(request.params.id).exec();
+            let posts = await PostModel.find().exec();
             return h.response(posts);
         } catch (error) {
             return h.response(error).code(500);
@@ -67,9 +67,26 @@ server.route({
 server.route({
     method: "PUT",
     path: "/post/{id}",
+    options: {
+        validate: {
+            payload: {
+                titulo: Joi.string().optional(),
+                subTitulo: Joi.string().optional(),
+                corpo: Joi.string().optional(),
+                author: Joi.string().optional(),
+                keyWord: Joi.string().optional(),
+                criadoEm: Joi.optional()    
+            },
+            failAction: (request, h, error) => {
+                return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
+            }
+        }
+    },
     handler: async (request, h) => {
         try {
-            let posts = await PostModel.find().exec();
+            request.payload.criadoEm = new Date();
+            let post = new PostModel(request.payload);
+            let posts = await PostModel.findByIdAndUpdate(request.params.id, post, {new: true}).exec();
             return h.response(posts);
         } catch (error) {
             return h.response(error).code(500);
