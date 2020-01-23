@@ -165,4 +165,18 @@ server.route({
   }
 })
 
+server.route({
+  method: "GET",
+  path: "/userSubscriptions",
+  handler: async (request, h) => {
+      try {
+          let userSubscriptions = await UserSubscriptionModel.find().exec();
+
+          return h.response(userSubscriptions);
+      } catch (error) {
+          return h.response(error).code(500);
+      }
+  }
+})
+
 server.start();
