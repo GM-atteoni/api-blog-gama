@@ -179,4 +179,18 @@ server.route({
   }
 })
 
+server.route({
+  method: "GET",
+  path: "/userSubscription/{id}",
+  handler: async (request, h) => {
+      try {
+          let userSubscription = await UserSubscription.findById(request.params.id).exec();
+
+          return h.response(userSubscription);
+      } catch (error) {
+          return h.response(error).code(500);
+      }
+  }
+})
+
 server.start();
