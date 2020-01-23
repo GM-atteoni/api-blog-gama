@@ -19,6 +19,8 @@ const PostModel = Mongoose.model("post", {
     corpo: String,
     keyWord: String,
     imgSrc: String,
+    imgTitle: String,
+    imgAlt: String,
     author: String,
     criadoEm: Date
 })
@@ -40,6 +42,8 @@ server.route({
                 subTitulo: Joi.string().required(),
                 corpo: Joi.string().required(),
                 imgSrc: Joi.string().optional(),
+                imgTitle: Joi.string().optional(),
+                imgAlt: Joi.string().optional(),
                 author: Joi.string().required(),
                 keyWord: Joi.string().required(),
                 criadoEm: Joi.optional()    
@@ -88,6 +92,8 @@ server.route({
                 corpo: Joi.string().optional(),
                 author: Joi.string().optional(),
                 imgSrc: Joi.string().optional(),
+                imgTitle: Joi.string().optional(),
+                imgAlt: Joi.string().optional(),
                 keyWord: Joi.string().optional(),
                 criadoEm: Joi.optional()    
             },
