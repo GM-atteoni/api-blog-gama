@@ -134,4 +134,35 @@ server.route({
     }
 })
 
+server.route({
+  method: "POST",
+  path: "/userSubscription",
+  options: {
+      validate: {
+          payload: {
+              nome: Joi.string().required(),
+              email: Joi.string().required(),
+              enviadoEm: Joi.optional(),
+              contexto: Joi.optional()
+          },
+          failAction: (request, h, error) => {
+              return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
+          }
+      }
+  },
+  handler: async (request, h) => {
+      try {
+          request.payload.enviadoEm = new Date();
+
+          let userSubscription = new userSubscriptionModel(request.payload);
+
+          let result = await post.save();
+
+          return h.response(result);
+      } catch (error) {
+          return h.response(error).code(500);
+      }
+  }
+})
+
 server.start();
