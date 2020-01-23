@@ -23,6 +23,13 @@ const PostModel = Mongoose.model("post", {
     criadoEm: Date
 })
 
+const UserSubscriptionModel = Mongoose.model("userSubscription", {
+  nome: String,
+  email: String,
+  enviadoEm: Date,
+  contexto: String
+})
+
 server.route({
     method: "POST",
     path: "/post",
