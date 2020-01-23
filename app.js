@@ -23,6 +23,13 @@ const PostModel = Mongoose.model("post", {
     criadoEm: Date
 })
 
+const UserSubscriptionModel = Mongoose.model("userSubscription", {
+  nome: String,
+  email: String,
+  enviadoEm: Date,
+  contexto: String
+})
+
 server.route({
     method: "POST",
     path: "/post",
@@ -125,6 +132,65 @@ server.route({
             return h.response(error).code(500);
         }
     }
+})
+
+server.route({
+  method: "POST",
+  path: "/userSubscription",
+  options: {
+      validate: {
+          payload: {
+              nome: Joi.string().required(),
+              email: Joi.string().required(),
+              enviadoEm: Joi.optional(),
+              contexto: Joi.optional()
+          },
+          failAction: (request, h, error) => {
+              return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
+          }
+      }
+  },
+  handler: async (request, h) => {
+      try {
+          request.payload.enviadoEm = new Date();
+
+          let userSubscription = new UserSubscriptionModel(request.payload);
+
+          let result = await userSubscription.save();
+
+          return h.response(result);
+      } catch (error) {
+          return h.response(error).code(500);
+      }
+  }
+})
+
+server.route({
+  method: "GET",
+  path: "/userSubscriptions",
+  handler: async (request, h) => {
+      try {
+          let userSubscriptions = await UserSubscriptionModel.find().exec();
+
+          return h.response(userSubscriptions);
+      } catch (error) {
+          return h.response(error).code(500);
+      }
+  }
+})
+
+server.route({
+  method: "GET",
+  path: "/userSubscription/{id}",
+  handler: async (request, h) => {
+      try {
+          let userSubscription = await UserSubscriptionModel.findById(request.params.id).exec();
+
+          return h.response(userSubscription);
+      } catch (error) {
+          return h.response(error).code(500);
+      }
+  }
 })
 
 server.start();
