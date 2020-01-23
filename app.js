@@ -154,9 +154,9 @@ server.route({
       try {
           request.payload.enviadoEm = new Date();
 
-          let userSubscription = new userSubscriptionModel(request.payload);
+          let userSubscription = new UserSubscriptionModel(request.payload);
 
-          let result = await post.save();
+          let result = await userSubscription.save();
 
           return h.response(result);
       } catch (error) {
