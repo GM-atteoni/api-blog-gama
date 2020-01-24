@@ -22,7 +22,9 @@ const PostModel = Mongoose.model("post", {
     imgTitle: String,
     imgAlt: String,
     author: String,
-    criadoEm: Date
+    criadoEm: Date,
+    metaTitle: String,
+    metaContent: String,
 })
 
 const UserSubscriptionModel = Mongoose.model("userSubscription", {
@@ -46,7 +48,9 @@ server.route({
                 imgAlt: Joi.string().optional(),
                 author: Joi.string().required(),
                 keyWord: Joi.string().required(),
-                criadoEm: Joi.optional()    
+                criadoEm: Joi.optional(),
+                metaTitle: Joi.string().optional(),
+                metaContent: Joi.string().optional(),
             },
             failAction: (request, h, error) => {
                 return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
@@ -95,7 +99,9 @@ server.route({
                 imgTitle: Joi.string().optional(),
                 imgAlt: Joi.string().optional(),
                 keyWord: Joi.string().optional(),
-                criadoEm: Joi.optional()    
+                criadoEm: Joi.optional(),
+                metaTitle: Joi.string().optional(),
+                metaContent: Joi.string().optional(),
             },
             failAction: (request, h, error) => {
                 return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
